@@ -35,85 +35,201 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
     else
         enemy = TTT_CIRCLE;
 
-    // horizontal
-    for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//    for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//    {
+//        if ( __field[i][0] == enemy && __field[i][1] == enemy && __field[i][2] == TTT_EMPTY )
+//        {
+//            TTTGame::MakeMove ( __field, this->mFigure, 2, i );
+//            return true;
+//        }
+//        if ( __field[i][0] == enemy && __field[i][2] == enemy && __field[i][1] == TTT_EMPTY )
+//        {
+//            TTTGame::MakeMove ( __field, this->mFigure, 1, i );
+//            return true;
+//        }
+//        if ( __field[i][1] == enemy && __field[i][2] == enemy && __field[i][0] == TTT_EMPTY )
+//        {
+//            TTTGame::MakeMove ( __field, this->mFigure, 0, i );
+//            return true;
+//        }
+//    }
+
+//     for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//     {
+//         if ( __field[0][i] == enemy && __field[1][i] == enemy && __field[2][i] == TTT_EMPTY )
+//         {
+//             TTTGame::MakeMove ( __field, this->mFigure, i, 2 );
+//             return true;
+//         }
+//         if ( __field[0][i] == enemy && __field[2][i] == enemy && __field[1][i] == TTT_EMPTY )
+//         {
+//             TTTGame::MakeMove ( __field, this->mFigure, i, 1 );
+//             return true;
+//         }
+//         if ( __field[1][i] == enemy && __field[2][i] == enemy && __field[0][i] == TTT_EMPTY )
+//         {
+//             TTTGame::MakeMove ( __field, this->mFigure, i, 0 );
+//             return true;
+//         }
+//     }
+
+//     int diagonal1[TTT_FIELDSIZE];
+//     for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//         diagonal1[i] = __field[i][i];
+
+//     if ( diagonal1[0] == enemy && diagonal1[1] == enemy && diagonal1[2] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 2 ) );
+//         return true;
+//     }
+//     if ( diagonal1[0] == enemy && diagonal1[2] == enemy && diagonal1[1] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
+//         return true;
+//     }
+//     if ( diagonal1[1] == enemy && diagonal1[2] == enemy && diagonal1[0] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 0 ) );
+//         return true;
+//     }
+
+
+//     int diagonal2[TTT_FIELDSIZE] = { __field[0][2], __field[1][1], __field[2][0] };
+
+//     if ( diagonal2[0] == enemy && diagonal2[1] == enemy && diagonal2[2] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 2 ) );
+//         return true;
+//     }
+//     if ( diagonal2[0] == enemy && diagonal2[2] == enemy && diagonal2[1] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
+//         return true;
+//     }
+//     if ( diagonal2[1] == enemy && diagonal2[2] == enemy && diagonal2[0] == TTT_EMPTY )
+//     {
+//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 0 ) );
+//         return true;
+//     }
+
+
+
+
+     //горизонталь
+    int c, jj;
+    bool b;
+    for(int i=0; i<TTT_FIELDSIZE; i++)
     {
-        if ( __field[i][0] == enemy && __field[i][1] == enemy && __field[i][2] == TTT_EMPTY )
+        c=0;
+        b=false;
+        for(int j=0; j<TTT_FIELDSIZE; j++)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, 2, i );
-            return true;
+            if(__field[i][j]!=enemy)
+            {
+                if(__field[i][j]==TTT_EMPTY)
+                {
+                    c++;
+                    jj=j;
+                }
+                else
+                {
+                    b=true;
+                }
+            }
         }
-        if ( __field[i][0] == enemy && __field[i][2] == enemy && __field[i][1] == TTT_EMPTY )
+        if (c==1 && !b)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, 1, i );
-            return true;
-        }
-        if ( __field[i][1] == enemy && __field[i][2] == enemy && __field[i][0] == TTT_EMPTY )
-        {
-            TTTGame::MakeMove ( __field, this->mFigure, 0, i );
+            TTTGame::MakeMove ( __field, this->mFigure, jj, i );
             return true;
         }
     }
 
-    // vertical
-    for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+    //вертикаль
+    for(int i=0; i<TTT_FIELDSIZE; i++)
     {
-        if ( __field[0][i] == enemy && __field[1][i] == enemy && __field[2][i] == TTT_EMPTY )
+        c=0;
+        b=false;
+        for(int j=0; j<TTT_FIELDSIZE; j++)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, i, 2 );
+            if(__field[j][i]!=enemy)
+            {
+                if(__field[j][i]==TTT_EMPTY)
+                {
+                    c++;
+                    jj=j;
+                }
+                else
+                {
+                    b=true;
+                }
+            }
+        }
+        if (c==1 && !b)
+        {
+            TTTGame::MakeMove ( __field, this->mFigure, i, jj );
             return true;
         }
-        if ( __field[0][i] == enemy && __field[2][i] == enemy && __field[1][i] == TTT_EMPTY )
+    }
+
+    //диагональ главная
+    int t;
+    b=false;
+    c=0;
+    for(int i=0; i<TTT_FIELDSIZE; i++)
+    {
+        for(int j=i; j<i+1; j++)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, i, 1 );
-            return true;
+            if(__field[i][j]!=enemy)
+            {
+                if(__field[i][j]==TTT_EMPTY)
+                {
+                    c++;
+                    jj=j;
+                    t=i;
+                }
+                else
+                {
+                    b=true;
+                }
+            }
         }
-        if ( __field[1][i] == enemy && __field[2][i] == enemy && __field[0][i] == TTT_EMPTY )
+    }
+    if (c==1 && !b)
+    {
+        TTTGame::MakeMove ( __field, this->mFigure, jj, t );
+        return true;
+    }
+
+    //диагональ побочная
+    b=false;
+    c=0;
+    for(int i=0; i<TTT_FIELDSIZE; i++)
+    {
+        for(int j=TTT_FIELDSIZE-1-i; j>=0; j--)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, i, 0 );
-            return true;
+            if(__field[i][j]!=enemy)
+            {
+                if(__field[i][j]==TTT_EMPTY)
+                {
+                    c++;
+                    jj=j;
+                    t=i;
+                }
+                else
+                {
+                    b=true;
+                }
+            }
+            break;
         }
     }
-
-    // diagonal 1
-    int diagonal1[TTT_FIELDSIZE];
-    for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-        diagonal1[i] = __field[i][i];
-
-    if ( diagonal1[0] == enemy && diagonal1[1] == enemy && diagonal1[2] == TTT_EMPTY )
+    if (c==1 && !b)
     {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 2 ) );
-        return true;
-    }
-    if ( diagonal1[0] == enemy && diagonal1[2] == enemy && diagonal1[1] == TTT_EMPTY )
-    {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
-        return true;
-    }
-    if ( diagonal1[1] == enemy && diagonal1[2] == enemy && diagonal1[0] == TTT_EMPTY )
-    {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 0 ) );
+        TTTGame::MakeMove ( __field, this->mFigure, jj, t );
         return true;
     }
 
-    // diagonal 2
-    int diagonal2[TTT_FIELDSIZE] = { __field[0][2], __field[1][1], __field[2][0] };
 
-    if ( diagonal2[0] == enemy && diagonal2[1] == enemy && diagonal2[2] == TTT_EMPTY )
-    {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 2 ) );
-        return true;
-    }
-    if ( diagonal2[0] == enemy && diagonal2[2] == enemy && diagonal2[1] == TTT_EMPTY )
-    {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
-        return true;
-    }
-    if ( diagonal2[1] == enemy && diagonal2[2] == enemy && diagonal2[0] == TTT_EMPTY )
-    {
-        while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 0 ) );
-        return true;
-    }
 
     return false;
 }
