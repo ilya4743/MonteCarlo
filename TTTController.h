@@ -3,7 +3,7 @@
 #include "AIAgent.h"
 #include "Board.h"
 #include "TTTCommonTypes.h"
-#include "TicTacToeGame.h"
+#include "TicTacToeGame1.h"
 #include <QObject>
 #include <memory>
 #include <vector>

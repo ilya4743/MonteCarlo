@@ -1,7 +1,7 @@
 #include "TTTController.h"
 #include "MiniMaxAgent.h"
 #include "NoAgent.h"
-#include "TicTacToeGame.h"
+#include "TicTacToeGame1.h"
 #include <QPushButton>
 
 TTTController::TTTController(const TTTOptions &options, QObject *parent)

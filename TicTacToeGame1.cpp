@@ -1,4 +1,4 @@
-#include "TicTacToeGame.h"
+#include "TicTacToeGame1.h"
 #include <QMessageBox>
 #include <QPushButton>
 

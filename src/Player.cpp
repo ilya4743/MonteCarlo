@@ -30,7 +30,7 @@ void User::Reset ()
 bool Bot::InterruptEnemy ( TTTGame::Field & __field )
 {
     int enemy;
-    if ( this->mFigure == TTT_CIRCLE )
+     if ( this->mFigure == TTT_CIRCLE )
         enemy = TTT_CROSS;
     else
         enemy = TTT_CIRCLE;
@@ -123,8 +123,8 @@ void Bot::MakeRandomMove ( TTTGame::Field & __field )
     int x = -1, y = -1;
     while ( !TTTGame::MakeMove ( __field, this->mFigure, x, y ) )
     {
-        x = rand () % 3;
-        y = rand () % 3;
+        x = rand () % TTT_FIELDSIZE;
+        y = rand () % TTT_FIELDSIZE;
     }
 
     // old
