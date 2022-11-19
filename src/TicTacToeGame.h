@@ -8,7 +8,7 @@ using namespace std;
 #define TTT_CROSS           1
 #define TTT_CIRCLE          2
 
-#define TTT_FIELDSIZE       5
+#define TTT_FIELDSIZE       3
 
 namespace TTTGame
 {

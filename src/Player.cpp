@@ -228,9 +228,6 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
         TTTGame::MakeMove ( __field, this->mFigure, jj, t );
         return true;
     }
-
-
-
     return false;
 }
 

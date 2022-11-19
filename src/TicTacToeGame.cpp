@@ -45,26 +45,94 @@ namespace TTTGame
 
     int CheckWin ( Field & __field )
     {
-        /// vertical
-        for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-        {
-            if ( __field[0][i] == __field[1][i] && __field[1][i] == __field[2][i] && __field[1][i] != TTT_EMPTY )
-                return __field[1][i];
-        }
+        //горизонталь
+       bool b;
+       for(int i=0; i<TTT_FIELDSIZE; i++)
+       {
+           b=false;
+           for(int j=1; j<TTT_FIELDSIZE; j++)
+           {
+               if(__field[i][j-1]==__field[i][j]&&__field[i][j]!=TTT_EMPTY)
+                  b=true;
+               else
+               {
+                   b=false;
+                   break;
+               }
 
-        /// horizontal
-        for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-        {
-            if ( __field[i][0] == __field[i][1] && __field[i][1] == __field[i][2] && __field[i][1] != TTT_EMPTY )
-                return __field[i][1];
-        }
+           }
+           if (b)
+               return __field[i][0];
+       }
 
-        /// diagonal
-        if ( __field[0][0] == __field[1][1] && __field[1][1] == __field[2][2] && __field[1][1] != TTT_EMPTY )
-            return __field[1][1];
+       //вертикаль
+       for(int i=0; i<TTT_FIELDSIZE; i++)
+       {
+           b=false;
+           for(int j=1; j<TTT_FIELDSIZE; j++)
+           {
+                if(__field[j-1][i]==__field[j][i]&&__field[j][i]!=TTT_EMPTY)
+                    b=true;
+                else
+                {
+                    b=false;
+                    break;
+                }
 
-        if ( __field[0][2] == __field[1][1] && __field[1][1] == __field[2][0] && __field[1][1] != TTT_EMPTY )
-            return __field[1][1];
+           }
+           if (b)
+               return __field[0][i];
+       }
+
+       //диагональ главная
+       b=false;
+       for(int i=1; i<TTT_FIELDSIZE; i++)
+            if(__field[i-1][i-1]==__field[i][i]&&__field[i][i]!=TTT_EMPTY)
+                b=true;
+            else
+            {
+                b=false;
+                break;
+            }
+
+       if (b)
+           return __field[0][0];
+
+       //диагональ побочная
+       b=false;
+       for(int i=1; i<TTT_FIELDSIZE; i++)
+            if(__field[i-1][TTT_FIELDSIZE-i]==__field[i][TTT_FIELDSIZE-(i+1)]&&__field[i][TTT_FIELDSIZE-(i+1)]!=TTT_EMPTY)
+                b=true;
+            else
+            {
+                b=false;
+                break;
+            }
+
+       if (b)
+           return __field[TTT_FIELDSIZE-1][0];
+
+
+//        /// vertical
+//        for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//        {
+//            if ( __field[0][i] == __field[1][i] && __field[1][i] == __field[2][i] && __field[1][i] != TTT_EMPTY )
+//                return __field[1][i];
+//        }
+
+//        /// horizontal
+//        for ( int i = 0; i < TTT_FIELDSIZE; i++ )
+//        {
+//            if ( __field[i][0] == __field[i][1] && __field[i][1] == __field[i][2] && __field[i][1] != TTT_EMPTY )
+//                return __field[i][1];
+//        }
+
+//        /// diagonal
+//        if ( __field[0][0] == __field[1][1] && __field[1][1] == __field[2][2] && __field[1][1] != TTT_EMPTY )
+//            return __field[1][1];
+
+//        if ( __field[0][2] == __field[1][1] && __field[1][1] == __field[2][0] && __field[1][1] != TTT_EMPTY )
+//            return __field[1][1];
 
         /// no one wins
         return TTT_EMPTY;
