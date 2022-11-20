@@ -48,26 +48,6 @@ public slots:
      */
     void updateBoardSize(int size);
     /**
-     * @brief updateSinglePlayer updates the AI existence flag to true as there is one player.
-     * @param checked: wether the radio button is checked or not.
-     */
-    void updateSinglePlayer(bool checked);
-    /**
-     * @brief updateTwoPlayers updates the AI existence flag to false as there are two player.
-     * @param checked: wether the radio button is checked or not.
-     */
-    void updateTwoPlayers(bool checked);
-    /**
-     * @brief updateAIstartsGame sets the AI starting the first play or not.
-     * @param checked: wether the checkbox is checked or not.
-     */
-    void updateAIstartsGame(bool checked);
-    /**
-     * @brief updateMiniMaxDepth sets the value of the depth cutoff for the minimax algorithm.
-     * @param depth: the depth cutoff for the minimax algorithm.
-     */
-    void updateMiniMaxDepth(int depth);
-    /**
      * @brief startGame hides the title screen and creates a Tic tac toe controller to start a game.
      */
     void startGame();

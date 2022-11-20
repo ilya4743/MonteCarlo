@@ -8,37 +8,33 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        src/main1.cpp
+        #src/main1.cpp
         src/MonteCarloBot.cpp
         src/Player.cpp
-        src/TicTacToeGame.cpp
         src/MonteCarloBot.h
         src/Player.h
-        src/TicTacToeGame.h
         TTTCommonTypes.h
-        AIAgent.h
-        MiniMaxAgent.h
-        NoAgent.h
-        MiniMaxAgent.cpp
-        TTTController.h
-        TTTController.cpp
-        Board.h
-        Board.cpp
         TicTacToeGame1.h
         TitleScreen.h
         TitleScreen.cpp
         TicTacToeGame1.cpp
-        #main.cpp
+        main.cpp
         TicTacToeGame.ui
         titlescreen.ui
+        src/Board.h
+        src/Board.cpp
+        src/defs.h
+        TTTController.cpp
+        TTTController.h
 )
+include_directories(src/)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MonteCarlo

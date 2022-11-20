@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <vector>
 #include <memory>
+#include "defs.h"
 
 using std::vector;
 
@@ -33,7 +34,7 @@ public:
      * @param cell: a refernece to the clicked cell.
      * @param currentPlayer: the current player's mark (X or O).
      */
-    void updateCell(Cell &cell, BoardMarks currentPlayer);
+    void updateCell(Cell &cell, CELL currentPlayer);
     /**
      * @brief declareGameState outputs the board's state to a QMessageBox.
      * @param boardState the current board state.
@@ -68,13 +69,13 @@ private:
      * @param currentPlayer: the current player's mark (X or O).
      * @return a QString of the player's mark.
      */
-    QString getPlayerText(BoardMarks currentPlayer);
+    QString getPlayerText(CELL currentPlayer);
     /**
      * @brief getPlayerStyleSheet gets a stylesheet associated with each player.
      * @param currentPlayer: the current player's mark (X or O).
      * @return a QString stylesheet of the player given in the input.
      */
-    QString getPlayerStyleSheet(BoardMarks currentPlayer);
+    QString getPlayerStyleSheet(CELL currentPlayer);
     /**
      * @brief getBoardFinalStateText converts a state to a decleration text,
      * that will be used when declaring the final state of a game.
@@ -91,5 +92,4 @@ signals:
      */
     void newGame();
 };
-
 #endif // MAINWINDOW_H

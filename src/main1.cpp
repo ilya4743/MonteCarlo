@@ -1,51 +1,50 @@
 #include <iostream>
 using namespace std;
 
-#include "TicTacToeGame.h"
 #include "Player.h"
 #include "MonteCarloBot.h"
-
-//#include <Windows.h>
+#include "Board.h"
+#include "defs.h"
 
 int main ()
 {
-    TTTGame::Field field;
-    TTTGame::Init ( field );
+    Board field(3);
+    field.Init();
 
     Player * player1 = new Bot ();
-    player1->SetFigure ( TTT_CROSS );
-    Player * player2 = new MonteCarloBot ();
-    player2->SetFigure ( TTT_CIRCLE );
+    //player1->SetFigure ( CELL::CROSS );
+    Player * player2 = new MonteCarloBot (3);
+    //player2->SetFigure ( CELL::CIRCLE );
 
     Player * current = player1;
 
-    cout << "Monte-Carlo bot setting up..." << endl;
-    for (int i = 0; i < TTT_FIELDSIZE*TTT_FIELDSIZE; i++ )
-    {
-        while ( TTTGame::IsPlayable ( field ) )
-        {
-            current->MakeMove ( field );
+//    cout << "Monte-Carlo bot setting up..." << endl;
+//    for (int i = 0; i < field.getSize()*field.getSize(); i++ )
+//    {
+//        while ( field.IsPlayable () )
+//        {
+//            current->MakeMove ( field );
 
-            if ( current == player1 )
-                current = player2;
-            else
-                current = player1;
-        }
+//            if ( current == player1 )
+//                current = player2;
+//            else
+//                current = player1;
+//        }
 
-        player1->Reset ();
-        player2->Reset ();
-        TTTGame::Init ( field );
-    }
+//        player1->Reset ();
+//        player2->Reset ();
+//        field.Init();
+//    }
 
-    system ( "cls" );
+//    system ( "cls" );
 
     player1 = new User ();
-    player1->SetFigure ( TTT_CROSS );
+    player1->SetFigure ( CELL::CROSS );
     current = player1;
 
-    while ( TTTGame::IsPlayable ( field ) )
+    while (field.IsPlayable())
     {
-        TTTGame::Print ( field );
+        field.print ();
 
         cout << "Player " << current->GetFigure () << " turn: ";
 
@@ -57,7 +56,7 @@ int main ()
             current = player1;
     }
 
-    TTTGame::Print ( field );
-    cout << "Winner is Player " << TTTGame::CheckWin ( field ) << endl;
+    field.print ();
+    cout << "Winner is Player " << field.CheckWin () << endl;
     system ( "pause" );
 }

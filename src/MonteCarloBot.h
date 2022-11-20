@@ -6,7 +6,8 @@
 using namespace std;
 
 #include "Player.h"
-#include "TicTacToeGame.h"
+#include "Board.h"
+#include "defs.h"
 
 typedef struct MCBTreeNode
 {
@@ -26,17 +27,17 @@ class MonteCarloBot : public Player
 {
 private:
     int mFigure;
-    TTTGame::Field mPreviousStep;
+    Board mPreviousStep;
     MCBTreeNode * mTree;
     MCBTreeNode * mCurrent;
 
-    void FindNewStep ( TTTGame::Field & __field, int & __x, int & __y );
+    void FindNewStep ( Board & __field, int & __x, int & __y );
 
 public:
-    MonteCarloBot ();
+    MonteCarloBot (int size);
     void SetFigure ( int __figure );
     int GetFigure ();
-    void MakeMove ( TTTGame::Field & __field );
+    int MakeMove ( Board & __field );
     void Reset ();
 };
 

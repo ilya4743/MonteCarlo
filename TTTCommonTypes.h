@@ -33,19 +33,6 @@ struct Cell
 struct TTTOptions
 {
     size_t boardSize = defaults::DEFAULT_BOARD_SIZE;
-    unsigned short miniMaxDepth = defaults::DEFAULT_MINIMAX_DEPTH;
-    bool AIopponent = true;
-    bool AIstarts = false;
 };
-
-/**
- * @brief The BoardMarks enum defiens the type of mark on the board.
- */
-enum class BoardMarks { Empty, X, O };
-
-/**
- * @brief The BoardState enum defines the possible states of a board.
- */
-enum class BoardState { NoWinner, XWins, OWins, Tie };
 
 #endif // TTTCOMMONTYPES_H

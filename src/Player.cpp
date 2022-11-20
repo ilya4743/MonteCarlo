@@ -1,132 +1,53 @@
 #include "Player.h"
 
 
-void User::SetFigure ( int __figure )
-{
-    this->mFigure = __figure;
-}
+//void User::SetFigure ( int __figure )
+//{
+//    this->mFigure = __figure;
+//}
 
-int User::GetFigure ()
-{
-    return this->mFigure;
-}
+//int User::GetFigure ()
+//{
+//    return this->mFigure;
+//}
 
-void User::MakeMove ( TTTGame::Field & __field )
-{
-    cout << "MAKE A MOVE, PLAYER (x y): ";
+//int User::MakeMove ( Board & __field )
+//{
+//    cout << "MAKE A MOVE, PLAYER (x y): ";
 
-    int x = -1, y = -1;
-    while ( !TTTGame::MakeMove ( __field, this->mFigure, x, y ) )
-    {
-        cin >> x >> y;
-    }
-}
+//    int x = -1, y = -1;
+//    while ( !__field.MakeMove(this->mFigure, x, y ) )
+//    {
+//        cin >> x >> y;
+//    }
+//    return
+//}
 
-void User::Reset ()
-{
-    // nothing
-}
+//void User::Reset ()
+//{
+//    // nothing
+//}
 
-bool Bot::InterruptEnemy ( TTTGame::Field & __field )
+bool Bot::InterruptEnemy ( Board & __field )
 {
     int enemy;
-     if ( this->mFigure == TTT_CIRCLE )
-        enemy = TTT_CROSS;
+     if ( this->mFigure == CELL::CIRCLE )
+        enemy = CELL::CROSS;
     else
-        enemy = TTT_CIRCLE;
-
-//    for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-//    {
-//        if ( __field[i][0] == enemy && __field[i][1] == enemy && __field[i][2] == TTT_EMPTY )
-//        {
-//            TTTGame::MakeMove ( __field, this->mFigure, 2, i );
-//            return true;
-//        }
-//        if ( __field[i][0] == enemy && __field[i][2] == enemy && __field[i][1] == TTT_EMPTY )
-//        {
-//            TTTGame::MakeMove ( __field, this->mFigure, 1, i );
-//            return true;
-//        }
-//        if ( __field[i][1] == enemy && __field[i][2] == enemy && __field[i][0] == TTT_EMPTY )
-//        {
-//            TTTGame::MakeMove ( __field, this->mFigure, 0, i );
-//            return true;
-//        }
-//    }
-
-//     for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-//     {
-//         if ( __field[0][i] == enemy && __field[1][i] == enemy && __field[2][i] == TTT_EMPTY )
-//         {
-//             TTTGame::MakeMove ( __field, this->mFigure, i, 2 );
-//             return true;
-//         }
-//         if ( __field[0][i] == enemy && __field[2][i] == enemy && __field[1][i] == TTT_EMPTY )
-//         {
-//             TTTGame::MakeMove ( __field, this->mFigure, i, 1 );
-//             return true;
-//         }
-//         if ( __field[1][i] == enemy && __field[2][i] == enemy && __field[0][i] == TTT_EMPTY )
-//         {
-//             TTTGame::MakeMove ( __field, this->mFigure, i, 0 );
-//             return true;
-//         }
-//     }
-
-//     int diagonal1[TTT_FIELDSIZE];
-//     for ( int i = 0; i < TTT_FIELDSIZE; i++ )
-//         diagonal1[i] = __field[i][i];
-
-//     if ( diagonal1[0] == enemy && diagonal1[1] == enemy && diagonal1[2] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 2 ) );
-//         return true;
-//     }
-//     if ( diagonal1[0] == enemy && diagonal1[2] == enemy && diagonal1[1] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
-//         return true;
-//     }
-//     if ( diagonal1[1] == enemy && diagonal1[2] == enemy && diagonal1[0] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 0 ) );
-//         return true;
-//     }
-
-
-//     int diagonal2[TTT_FIELDSIZE] = { __field[0][2], __field[1][1], __field[2][0] };
-
-//     if ( diagonal2[0] == enemy && diagonal2[1] == enemy && diagonal2[2] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 0, 2 ) );
-//         return true;
-//     }
-//     if ( diagonal2[0] == enemy && diagonal2[2] == enemy && diagonal2[1] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 1, 1 ) );
-//         return true;
-//     }
-//     if ( diagonal2[1] == enemy && diagonal2[2] == enemy && diagonal2[0] == TTT_EMPTY )
-//     {
-//         while ( !TTTGame::MakeMove ( __field, this->mFigure, 2, 0 ) );
-//         return true;
-//     }
-
-
-
+        enemy = CELL::CIRCLE;
 
      //горизонталь
     int c, jj;
     bool b;
-    for(int i=0; i<TTT_FIELDSIZE; i++)
+    for(int i=0; i<__field.getSize(); i++)
     {
         c=0;
         b=false;
-        for(int j=0; j<TTT_FIELDSIZE; j++)
+        for(int j=0; j<__field.getSize(); j++)
         {
-            if(__field[i][j]!=enemy)
+            if(__field.map[i][j]!=enemy)
             {
-                if(__field[i][j]==TTT_EMPTY)
+                if(__field.map[i][j]==CELL::EMPTY)
                 {
                     c++;
                     jj=j;
@@ -139,21 +60,21 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
         }
         if (c==1 && !b)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, jj, i );
+            __field.MakeMove(this->mFigure, jj, i );
             return true;
         }
     }
 
     //вертикаль
-    for(int i=0; i<TTT_FIELDSIZE; i++)
+    for(int i=0; i<__field.getSize(); i++)
     {
         c=0;
         b=false;
-        for(int j=0; j<TTT_FIELDSIZE; j++)
+        for(int j=0; j<__field.getSize(); j++)
         {
-            if(__field[j][i]!=enemy)
+            if(__field.map[j][i]!=enemy)
             {
-                if(__field[j][i]==TTT_EMPTY)
+                if(__field.map[j][i]==CELL::EMPTY)
                 {
                     c++;
                     jj=j;
@@ -166,7 +87,7 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
         }
         if (c==1 && !b)
         {
-            TTTGame::MakeMove ( __field, this->mFigure, i, jj );
+            __field.MakeMove(this->mFigure, i, jj );
             return true;
         }
     }
@@ -175,13 +96,13 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
     int t;
     b=false;
     c=0;
-    for(int i=0; i<TTT_FIELDSIZE; i++)
+    for(int i=0; i<__field.getSize(); i++)
     {
         for(int j=i; j<i+1; j++)
         {
-            if(__field[i][j]!=enemy)
+            if(__field.map[i][j]!=enemy)
             {
-                if(__field[i][j]==TTT_EMPTY)
+                if(__field.map[i][j]==CELL::EMPTY)
                 {
                     c++;
                     jj=j;
@@ -196,20 +117,20 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
     }
     if (c==1 && !b)
     {
-        TTTGame::MakeMove ( __field, this->mFigure, jj, t );
+        __field.MakeMove(this->mFigure, jj, t );
         return true;
     }
 
     //диагональ побочная
     b=false;
     c=0;
-    for(int i=0; i<TTT_FIELDSIZE; i++)
+    for(int i=0; i<__field.getSize(); i++)
     {
-        for(int j=TTT_FIELDSIZE-1-i; j>=0; j--)
+        for(int j=__field.getSize()-1-i; j>=0; j--)
         {
-            if(__field[i][j]!=enemy)
+            if(__field.map[i][j]!=enemy)
             {
-                if(__field[i][j]==TTT_EMPTY)
+                if(__field.map[i][j]==CELL::EMPTY)
                 {
                     c++;
                     jj=j;
@@ -225,29 +146,21 @@ bool Bot::InterruptEnemy ( TTTGame::Field & __field )
     }
     if (c==1 && !b)
     {
-        TTTGame::MakeMove ( __field, this->mFigure, jj, t );
+        __field.MakeMove(this->mFigure, jj, t );
         return true;
     }
     return false;
 }
 
-void Bot::MakeRandomMove ( TTTGame::Field & __field )
+int Bot::MakeRandomMove ( Board & __field )
 {
     int x = -1, y = -1;
-    while ( !TTTGame::MakeMove ( __field, this->mFigure, x, y ) )
+    while ( !__field.MakeMove(this->mFigure, x, y) )
     {
-        x = rand () % TTT_FIELDSIZE;
-        y = rand () % TTT_FIELDSIZE;
+        x = rand () % __field.getSize();
+        y = rand () % __field.getSize();
     }
-
-    // old
-    /*for ( int y = 0; y < TTT_FIELDSIZE; y++ )
-        for ( int x = 0; x < TTT_FIELDSIZE; x++ )
-            if ( __field[y][x] == TTT_EMPTY )
-            {
-                TTTGame::MakeMove ( __field, this->mFigure, x, y );
-                return;
-            }*/
+    return x+y*__field.getSize();
 }
 
 void Bot::SetFigure ( int __figure )
@@ -260,7 +173,7 @@ int Bot::GetFigure ()
     return this->mFigure;
 }
 
-void Bot::MakeMove ( TTTGame::Field & __field )
+int Bot::MakeMove ( Board & __field )
 {
     cout << "BOT MAKING A MOVE..." << endl;
 

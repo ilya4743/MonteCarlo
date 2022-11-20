@@ -43,27 +43,27 @@ vector<Cell> TicTacToeGame::buildCellButtons(size_t boardSize)
     return cells;
 }
 
-QString TicTacToeGame::getPlayerText(BoardMarks currentPlayer)
+QString TicTacToeGame::getPlayerText(CELL currentPlayer)
 {
     switch (currentPlayer) {
-    case BoardMarks::O:
+    case CELL::CIRCLE:
         return "O";
-    case BoardMarks::X:
+    case CELL::CROSS:
         return "X";
     default:
         return "";
     }
 }
 
-QString TicTacToeGame::getPlayerStyleSheet(BoardMarks currentPlayer)
+QString TicTacToeGame::getPlayerStyleSheet(CELL currentPlayer)
 {
     QString color;
 
     switch (currentPlayer) {
-    case BoardMarks::O:
+    case CELL::CIRCLE:
         color = defaults::O_COLOR;
         break;
-    case BoardMarks::X:
+    case CELL::CROSS:
         color = defaults::X_COLOR;
         break;
     default:
@@ -80,7 +80,7 @@ QString TicTacToeGame::getPlayerStyleSheet(BoardMarks currentPlayer)
         .arg(color);
 }
 
-void TicTacToeGame::updateCell(Cell &cell, BoardMarks currentPlayer)
+void TicTacToeGame::updateCell(Cell &cell, CELL currentPlayer)
 {
     // Update Cell button in GUI
     cell.cellBtn->setStyleSheet(getPlayerStyleSheet(currentPlayer));

@@ -1,12 +1,13 @@
 #ifndef TTTCONTROLLER_H
 #define TTTCONTROLLER_H
-#include "AIAgent.h"
-#include "Board.h"
 #include "TTTCommonTypes.h"
 #include "TicTacToeGame1.h"
 #include <QObject>
 #include <memory>
 #include <vector>
+#include "Board.h"
+#include "Player.h"
+#include "MonteCarloBot.h"
 
 using std::unique_ptr;
 using std::vector;
@@ -30,7 +31,7 @@ protected:
     /**
      * @brief board is the model that represents the underlying layer of a game.
      */
-    Board board_;
+    Board board;
     /**
      * @brief cells are the collection of cell buttons built by the view class.
      */
@@ -42,11 +43,13 @@ protected:
     /**
      * @brief currentPlayer is the player that will play the current turn.
      */
-    BoardMarks currentPlayer_;
+    CELL currentPlayer_;
     /**
      * @brief agent is the AI agent chosen to play against the human player.
      */
-    unique_ptr<AIAgent> agent_;
+    //unique_ptr<AIAgent> agent_;
+    Player * player1;
+    Player * player2;
 
 private: // Methods
     /**

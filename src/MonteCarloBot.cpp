@@ -1,26 +1,21 @@
 #include "MonteCarloBot.h"
 
-void MonteCarloBot::FindNewStep ( TTTGame::Field & __field, int & __x, int & __y )
+void MonteCarloBot::FindNewStep ( Board & __field, int & __x, int & __y )
 {
-    for (int y = 0; y < TTT_FIELDSIZE; y++)
-        for (int x = 0; x < TTT_FIELDSIZE; x++)
-            if ( __field[y][x] != this->mPreviousStep[y][x] )
+    for (int y = 0; y < __field.getSize(); y++)
+        for (int x = 0; x <  __field.getSize(); x++)
+            if ( __field.map[y][x] != this->mPreviousStep.map[y][x] )
             {
                 __x = x;
                 __y = y;
             }
-
-    for ( int y = 0; y < TTT_FIELDSIZE; y++ )
-        for ( int x = 0; x < TTT_FIELDSIZE; x++ )
-            this->mPreviousStep[y][x] = __field[y][x];
+    this->mPreviousStep=__field;
 }
 
-MonteCarloBot::MonteCarloBot ()
+MonteCarloBot::MonteCarloBot (int size):mFigure(0),mPreviousStep(size)
 {
-    this->mFigure = 0;
     this->mTree = new MCBTreeNode;
     this->mCurrent = this->mTree;
-    TTTGame::Init ( this->mPreviousStep );
 }
 
 void MonteCarloBot::SetFigure ( int __figure )
@@ -33,7 +28,7 @@ int MonteCarloBot::GetFigure ()
     return this->mFigure;
 }
 
-void MonteCarloBot::MakeMove ( TTTGame::Field & __field )
+int MonteCarloBot::MakeMove ( Board & __field )
 {
     cout << "MONTE-CARLO BOT MAKING MOVE..." << endl;
 
@@ -58,7 +53,7 @@ void MonteCarloBot::MakeMove ( TTTGame::Field & __field )
         enemymove->Parent = this->mCurrent;
         enemymove->MoveX = enemyx;
         enemymove->MoveY = enemyy;
-        enemymove->Player = (this->mFigure == TTT_CROSS) ? TTT_CIRCLE : TTT_CROSS;
+        enemymove->Player = (this->mFigure == CELL::CROSS) ? CELL::CIRCLE : CELL::CROSS;
         this->mCurrent->Nodes.push_back ( enemymove );
         this->mCurrent = enemymove;
     }
@@ -81,19 +76,16 @@ void MonteCarloBot::MakeMove ( TTTGame::Field & __field )
 
     // 3. simulation
     // simulate game.
-    TTTGame::Field field;
-    for ( int y = 0; y < TTT_FIELDSIZE; y++ )
-        for ( int x = 0; x < TTT_FIELDSIZE; x++ )
-            field[y][x] = __field[y][x];
+    Board field(__field);
 
     Player * bot1 = new Bot ();
-    bot1->SetFigure ( (this->mFigure == TTT_CROSS) ? TTT_CIRCLE : TTT_CROSS );
+    bot1->SetFigure ( (this->mFigure == CELL::CROSS) ? CELL::CIRCLE : CELL::CROSS );
     Player * bot2 = new Bot ();
     bot2->SetFigure ( this->mFigure );
 
     Player * current = bot2;
 
-    while ( TTTGame::IsPlayable ( field ) )
+    while ( field.IsPlayable() )
     {
         current->MakeMove ( field );
 
@@ -108,7 +100,7 @@ void MonteCarloBot::MakeMove ( TTTGame::Field & __field )
 
     // 4. backpropagation.
 
-    int winner = TTTGame::CheckWin ( field );
+    int winner = field.CheckWin();
 
     MCBTreeNode * currentnode = newnode;
     while ( currentnode != nullptr )
@@ -123,11 +115,12 @@ void MonteCarloBot::MakeMove ( TTTGame::Field & __field )
 
     // make move...
     this->mCurrent = newnode;
-    TTTGame::MakeMove ( __field, this->mFigure, mCurrent->MoveX, mCurrent->MoveY );
+    __field.MakeMove(this->mFigure, mCurrent->MoveX, mCurrent->MoveY );
+    return mCurrent->MoveX+mCurrent->MoveY*__field.getSize();
 }
 
 void MonteCarloBot::Reset ()
 {
     this->mCurrent = this->mTree;
-    TTTGame::Init ( this->mPreviousStep );
+    this->mPreviousStep.Init();
 }
